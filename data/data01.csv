@@ -1,0 +1,186 @@
+"State","City","Revenue","Profit"
+"Alabama","Auburn",889.47,-318.77489999999995
+"Alabama","Hoover",3557.8500000000004,799.9159999999999
+"Alabama","Phenix City",1663.1399999999999,-216.644
+"Arizona","Casas Adobes",6612.72,947.1989399999999
+"Arizona","Glendale",1977.9199999999998,-2071.7232
+"Arizona","Sun City",2063.48,-714.939006
+"Arizona","Surprise",11944.52,642.758
+"Arizona","Yuma",1564.98,-225.3854
+"Arkansas","Sherwood",5594.07,-1902.74418
+"California","Davis",13509.12,862.1484999999998
+"California","Escondido",9772.029999999999,1596.67996
+"California","Fresno",6927.68,-117.29695999999996
+"California","Hacienda Heights",9663.33,-380.51002
+"California","Huntington Beach",640.7499999999999,70.754
+"California","Long Beach",1735.3599999999997,-465.2702
+"California","Los Angeles",255472.95,47902.2901405
+"California","Los Gatos",62889.250000000015,13109.495089700002
+"California","Manhattan Beach",1534.32,59.51299999999999
+"California","Menlo Park",768.98,-288.3068
+"California","Mountain View",7235.79,565.322026
+"California","Murrieta",1080.58,-202.22755999999998
+"California","Oakland",3085.05,2573.1924
+"California","San Carlos",2122.73,1025.0494039999999
+"California","San Francisco",44963.17000000001,11473.310082
+"California","Santa Cruz",61646.26,-196.63744850000165
+"California","Stockton",12893.42,3766.8214179999995
+"California","Temecula",1452.8999999999999,-1488.7349120000001
+"California","Twentynine Palms",31581.95,4324.244
+"California","Woodland",6323.6900000000005,618.1057000000001
+"Colorado","Lakewood",6956.09,2430.2576
+"Colorado","Northglenn",4336.4,314.85110000000003
+"Connecticut","Meriden",11546.59,151.6968
+"Delaware","Wilmington",1419.38,2951.0724
+"District of Columbia","Washington",22094.55,-2053.3246
+"Florida","Belle Glade",1035.61,-319.18980000000005
+"Florida","Boca Raton",826.1899999999999,-87.20048
+"Florida","Bradenton",9390.400000000001,-855.6458040000001
+"Florida","Dunedin",2867.5600000000004,-326.67186599999997
+"Florida","Fort Pierce",3163.5299999999997,1061.458108
+"Florida","Gainesville",4212.69,2038.9390999999998
+"Florida","Miami",3949.4300000000003,806.1560199999999
+"Florida","North Port",3513.5200000000004,-2135.2423000000003
+"Florida","Oakland Park",1663.49,-5.832640000000003
+"Florida","Orlando",5140,3670.384
+"Florida","Pensacola",708.73,-71.6226
+"Florida","Poinciana",11401.820000000002,-1009.866986
+"Florida","Saint Petersburg",218.95,-1441.11792
+"Florida","Tallahassee",4589.95,689.9635999999999
+"Florida","Winter Haven",1464.2999999999997,-1087.0296799999999
+"Georgia","Albany",205.62,-158.03500000000003
+"Georgia","Atlanta",2492.34,-9.18653599999999
+"Georgia","Dunwoody",12752.65,-429.24169600000005
+"Georgia","East Point",62098.26000000002,-3403.1025948999995
+"Georgia","Hinesville",2820.67,-228.26199999999983
+"Georgia","Kennesaw",26885.37,2717.9355
+"Georgia","La Grange",700.7299999999999,-250.89430000000002
+"Idaho","Caldwell",810.4200000000001,335.69549
+"Illinois","Carbondale",8189.7,940.365
+"Illinois","Carpentersville",2714.5,-283.04054399999995
+"Illinois","Chicago",51894.51000000001,11771.774748500002
+"Illinois","Collinsville",3316.5699999999993,686.8684
+"Illinois","Des Plaines",2373.4300000000003,-465.837224
+"Illinois","Mount Prospect",1971.48,-1799.6805920000002
+"Illinois","Mundelein",3038.25,-427.8866
+"Illinois","Naperville",2147.1600000000003,-500.3880000000001
+"Illinois","Northbrook",2259.33,-4495.200900000001
+"Illinois","Peoria",2483.08,2022.6680000000001
+"Illinois","Streamwood",7918.94,4475.964399999999
+"Illinois","Vernon Hills",4900.15,2674.8357
+"Illinois","Woodstock",2708.3199999999997,203.2992
+"Indiana","Anderson",1037.97,-877.14516
+"Indiana","Indianapolis",2146.85,363.545484
+"Indiana","Lafayette",10181.92,6970.344599999999
+"Indiana","Marion",5544.249999999999,-1297.10274
+"Indiana","Merrillville",2674.7900000000004,179.23499999999999
+"Iowa","Council Bluffs",1427.45,548.609
+"Iowa","Marshalltown",601.76,70.31144399999997
+"Kansas","Hutchinson",6788.93,-159.61605999999998
+"Kansas","Wichita",2652.87,596.2426800000001
+"Louisiana","Alexandria",8963.31,1438.7831999999999
+"Louisiana","New Orleans",2141.1500000000005,-1616.7445999999998
+"Maine","Auburn",10805.77,4264.164999999999
+"Maine","Saco",3942.6000000000004,19.804599999999994
+"Maryland","Clinton",4245.05,7.8583
+"Maryland","Gaithersburg",420.78,365.91400000000004
+"Massachusetts","Boston",5743.6,49.543299999999974
+"Massachusetts","Gardner",6554.71,1078.21532
+"Massachusetts","Shrewsbury",360.24,27.438
+"Massachusetts","Southbridge",7893.5199999999995,6670.327200000001
+"Michigan","Detroit",8737.27,-777.7154400000002
+"Michigan","Holland",6501.36,1627.350252
+"Michigan","Madison Heights",1695.9,-268.293366
+"Michigan","Midland",3317.2,689.28012
+"Michigan","Rochester Hills",10918.62,4547.87102
+"Michigan","Southgate",8411.66,2194.863499999999
+"Minnesota","Lino Lakes",6307.530000000001,4352.1957
+"Minnesota","Minnetonka",323.23,-18.146800000000006
+"Minnesota","Prior Lake",1146.62,-169.18158
+"Minnesota","Richfield",1070.49,-218.4384
+"Minnesota","Saint Paul",2880.14,-3990.6992
+"Minnesota","Shoreview",10401.519999999999,1448.7842000000003
+"Minnesota","Woodbury",7660.5,-4076.7420200000006
+"Mississippi","Biloxi",2598.54,1067.37892
+"Missouri","Bridgeton",2873.27,-539.4355999999999
+"Missouri","Jefferson City",2014.93,-165.85508
+"Missouri","Kirkwood",4746.99,1056.20172
+"Missouri","Wentzville",4331.49,50.98239999999987
+"Montana","Bozeman",1839.0900000000001,-1643.8658
+"Montana","Helena",1083.3,673.6558000000001
+"Nebraska","La Vista",1037.95,-167.102
+"Nevada","North Las Vegas",17888.53,2801.6912599999996
+"New Hampshire","Manchester",2259.42,1268.47938
+"New Jersey","Hawthorne",883.71,-97.9987
+"New Jersey","Maple Shade",554.02,-442.452
+"New Jersey","North Plainfield",2417.2999999999997,-752.3288
+"New Jersey","Old Bridge",1614.66,692.5162
+"New Jersey","Secaucus",36789.48000000001,1749.2860799999999
+"New Jersey","Willingboro",702.44,75.84260000000005
+"New Mexico","Alamogordo",6367.43,-1502.826
+"New Mexico","Farmington",1755.8,-979.2561479999999
+"New York","Depew",4499.13,226.43938000000003
+"New York","Hicksville",1320.89,65.284
+"New York","Levittown",3993.8,-779.9593927999999
+"New York","New York City",146980.51999999996,-1730.2843432000004
+"New York","Rochester",1664.38,139.01090000000005
+"New York","Roosevelt",501.95,91.09943200000001
+"New York","Rye",2349.7900000000004,-341.01364
+"New York","Valley Stream",7322.99,1778.1828
+"North Carolina","Charlotte",7474.22,-556.8897999999999
+"North Carolina","Fort Bragg",1050.35,-13.054779999999997
+"North Carolina","Goldsboro",4711.37,-2588.2664
+"North Carolina","Greenville",10513.44,-470.61354000000006
+"North Carolina","Indian Trail",835.63,169.26649999999995
+"North Carolina","Salisbury",2384.36,615.9844600000001
+"North Dakota","Mandan",11783.949999999999,3212.35514
+"Ohio","Akron",2790.9500000000003,-521.9543
+"Ohio","Dayton",4886.219999999999,-132.28300000000002
+"Ohio","Dublin",2841.71,-1958.521
+"Ohio","Fairfield",35185.59,-4898.55977
+"Ohio","Kent",6098.639999999999,3710.4827000000005
+"Ohio","Lima",673.28,2672.35335
+"Ohio","Massillon",2426.56,439.09329999999994
+"Ohio","North Ridgeville",1786.21,254.17389999999995
+"Ohio","Springfield",1245.27,17.293
+"Ohio","Warren",359.22999999999996,-133.632
+"Oklahoma","Altus",577.04,-64.3599
+"Oklahoma","Edmond",13897.630000000001,7790.0277
+"Oregon","Albany",6792.25,-3107.52836
+"Oregon","Klamath Falls",13247.55,797.1048
+"Oregon","Medford",3404.17,22.49550000000005
+"Oregon","Oregon City",11882.79,-557.138
+"Oregon","Portland",3902.66,544.21268
+"Pennsylvania","Baldwin",191.49999999999997,-27.980399999999996
+"Pennsylvania","Chester",5557.4400000000005,-445.07058
+"Pennsylvania","Hazleton",912.5,1618.279
+"Pennsylvania","Wilkinsburg",2494.74,-573.82162
+"Tennessee","Columbia",17695.43,-1023.7306
+"Tennessee","Murfreesboro",7847.210000000001,4156.555
+"Texas","Bedford",3479.7099999999996,1785.1831000000002
+"Texas","Corsicana",971.1500000000001,25.147500000000008
+"Texas","Flower Mound",1198.55,107.58226
+"Texas","Greenville",3516.17,-796.558
+"Texas","Houston",12858.91,1861.9122000000011
+"Texas","Huntsville",5364.83,-1078.4778
+"Texas","Lake Jackson",2139.37,1095.5037
+"Texas","Seguin",2283.5099999999998,-585.1700000000001
+"Texas","Sulphur Springs",6864.969999999999,1186.7723
+"Texas","Texas City",1794.82,-85.66159999999999
+"Utah","Lehi",2305.2200000000003,2394.3154
+"Vermont","Bennington",33996.95,3503.87458
+"Virginia","Herndon",11954.12,1807.648
+"Virginia","Rose Hill",10810.140000000001,3102.8284
+"Washington","Cottage Lake",1064.68,-645.9517
+"Washington","Marysville",355.2,-226.14192000000003
+"Washington","Parkland",2983.88,1484.0387999999998
+"Washington","Puyallup",1900.1299999999999,-449.620684
+"Washington","Redmond",13475.560000000001,327.3212
+"Washington","Seattle",7352.98,8560.3775
+"West Virginia","Beckley",7795.179999999999,4610.51404
+"Wisconsin","Appleton",381.8,296.4893
+"Wisconsin","Green Bay",6421.62,2353.9237200000002
+"Wisconsin","Madison",263.45000000000005,109.04369999999999
+"Wisconsin","Oak Creek",2831.86,209.12458000000004
+"Wisconsin","Oshkosh",1905.7000000000003,238.35290000000003
+"Wisconsin","Sun Prairie",1171.78,4933.601299999999

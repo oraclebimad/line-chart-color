@@ -1,0 +1,6 @@
+[submodule "assets/core"]
+	path = assets/core
+	url = https://github.com/oraclebimad/line-chart-core.git
+[submodule "assets/js/Utils"]
+	path = assets/js/Utils
+	url = https://github.com/oraclebimad/plugin-utils.git

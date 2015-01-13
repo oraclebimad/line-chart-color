@@ -1,0 +1,8 @@
+.DS_Store
+node_modules/
+.project
+.session
+*~
+*.swp
+*.xmp
+.idea
