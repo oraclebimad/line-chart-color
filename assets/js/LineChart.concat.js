@@ -125,7 +125,7 @@ return i?u+i*(n[r]-u):u},Bo.median=function(t,e){return arguments.length>1&&(t=t
       var field = column.field;
       var last;
       metaData[column.name] = column;
-      column.label = getFieldName(column);
+      column.label = getFieldName(column.field);
       columns.push(column.name);
       if (column.fieldType === 'measure')
         numericColumns.push(column.name);
