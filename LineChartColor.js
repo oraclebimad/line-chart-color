@@ -58,7 +58,7 @@
     var nested = this.dataModel.nest();
     var self = this;
     var colors = this.getColorScheme(props);
-    if (isNaN(data[0][3]))
+    if (isNaN(parseInt(data[0][3])))
       colors = colors.slice(colors.length - 1);
 
     this.visualization = new Visualizations.LineChart(container, nested, {
@@ -86,7 +86,7 @@
   },
   refresh: function (context, container, data, fields, props) {
     var colors = this.getColorScheme(props)
-    if (isNaN(data[0][3]))
+    if (isNaN(parseInt(data[0][3])))
       colors = colors.slice(colors.length - 1);
     //hack to avoid refresh when removing filters from this plugin
     if (!this.avoidRefresh) {
