@@ -6,7 +6,7 @@ return i?u+i*(n[r]-u):u},Bo.median=function(t,e){return arguments.length>1&&(t=t
   'use strict';
   /* jshint unused:true, jquery:true, curly:false, browser:true */
   var formats = {
-    raw: function () { 
+    raw: function () {
       var decimals = d3.format('.2f');
       var integers = d3.format('');
       return function (value) {
@@ -27,6 +27,8 @@ return i?u+i*(n[r]-u):u},Bo.median=function(t,e){return arguments.length>1&&(t=t
       opts = Utils.isObject(opts) ? opts : {};
       if (opts.decimals)
         format += '.2';
+      if (opts.si)
+        format = 's';
       format += 'f';
       return d3.format(format);
     }
@@ -80,6 +82,17 @@ return i?u+i*(n[r]-u):u},Bo.median=function(t,e){return arguments.length>1&&(t=t
   /* jshint unused:true, jquery:true, curly:false */
   /* global Utils */
 
+  function getFieldName (field) {
+    var last;
+    var name = '';
+    if (typeof field === 'string') {
+      field = field.slice(field.lastIndexOf('/') + 1);
+      last = field.indexOf(':');
+      last = last > 0 ? last + 1 : field.length;
+      name = field.slice(0, last);
+    }
+    return name;
+  }
   /**
    * Creates a new data model to manipulate the data
    * @param data Array Array of arrays
@@ -96,6 +109,7 @@ return i?u+i*(n[r]-u):u},Bo.median=function(t,e){return arguments.length>1&&(t=t
        by: null,
        comparator: d3.descending
      };
+     this.columnOrder = [];
   };
 
   /**
@@ -111,10 +125,7 @@ return i?u+i*(n[r]-u):u},Bo.median=function(t,e){return arguments.length>1&&(t=t
       var field = column.field;
       var last;
       metaData[column.name] = column;
-      field = field.slice(field.lastIndexOf('/') + 1);
-      last = field.indexOf(':');
-      last = last > 0 ? last + 1 : field.length;
-      column.label = field.slice(0, last);
+      column.label = getFieldName(column);
       columns.push(column.name);
       if (column.fieldType === 'measure')
         numericColumns.push(column.name);
@@ -162,19 +173,21 @@ return i?u+i*(n[r]-u):u},Bo.median=function(t,e){return arguments.length>1&&(t=t
    */
   DataModel.prototype.setColumnOrder = function (columns) {
     var columnOrder = [];
-    if (!Utils.isArray(columns) || !columns.length) {
-      throw new Error('Incorrect column order definition');
+    if (!Utils.isArray(columns))
+      columns = [];
+
+    if (columns.length > 0) {
+      // first add the string columns that come in the ordered array
+      columns.forEach(function (column) {
+        if (column in this.indexedMetaData && this.indexedMetaData[column].fieldType !== 'measure')
+          columnOrder.push(column);
+      }, this);
+      //Then add any missing string columns to the end of the array
+      this.metaData.forEach(function (column) {
+        if (columns.indexOf(column.name) === -1 && column.fieldType !== 'measure')
+          columnOrder.push(column.name);
+      });
     }
-    // first add the string columns that come in the ordered array
-    columns.forEach(function (column) {
-      if (column in this.indexedMetaData && this.indexedMetaData[column].fieldType !== 'measure')
-        columnOrder.push(column);
-    }, this);
-    //Then add any missing string columns to the end of the array
-    this.metaData.forEach(function (column) {
-      if (columns.indexOf(column.name) === -1 && column.fieldType !== 'measure')
-        columnOrder.push(column.name);
-    });
     this.columnOrder = columnOrder;
     return this;
   };
