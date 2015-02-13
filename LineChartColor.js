@@ -2,7 +2,8 @@
   id: '03efcb62a28c.LineChartColorColumn',
   component: {
     'name': 'Line Bar Chart with Color',
-    'tooltip': 'Insert Line Bar Chart with Color'
+    'tooltip': 'Insert Line Bar Chart with Color',
+    'cssClass': 'line-chart-plugin'
   },
   properties: [
     {key: "width", label: "Width", type: "length", value: "320px"},
