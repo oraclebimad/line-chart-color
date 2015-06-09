@@ -28,12 +28,15 @@ return i?u+i*(n[r]-u):u},Bo.median=function(t,e){return arguments.length>1&&(t=t
       if (opts.decimals)
         format += '.2';
       if (opts.si)
-        format = 's';
+        format += 's';
       format += 'f';
       return d3.format(format);
     }
   };
   var Utils = {
+    isDesigner: function () {
+      return xdo && xdo.app && xdo.app.designer && xdo.app.designer.DesignerApplication;
+    },
     proxy: function (fn, thisArg) {
       return function () {
         return fn.apply(thisArg, Utils.toArray(arguments));
@@ -41,6 +44,9 @@ return i?u+i*(n[r]-u):u},Bo.median=function(t,e){return arguments.length>1&&(t=t
     },
     toArray: function (obj) {
       return Array.prototype.slice.call(obj);
+    },
+    stringToBoolean: function(obj){
+      return typeof obj === 'boolean' ? obj : obj.toLowerCase() === "true";
     },
     deferred: jQuery.Deferred,
     pluck: function (data, key) {
@@ -59,6 +65,9 @@ return i?u+i*(n[r]-u):u},Bo.median=function(t,e){return arguments.length>1&&(t=t
     isObject: function (obj) {
       return jQuery.isPlainObject(obj);
     },
+    isFunction: function (method) {
+      return typeof method === 'function';
+    },
     format: function (format, opts) {
       if (!(format in formats))
         format = 'raw';
@@ -66,6 +75,16 @@ return i?u+i*(n[r]-u):u},Bo.median=function(t,e){return arguments.length>1&&(t=t
     },
     capitalize: function (text) {
       return (text + '').toLowerCase().replace(/_/g, ' ');
+    },
+    ascending: function (a, b) {
+      if (!isNaN(a) && !isNaN(b))
+        return d3.ascending(+a, +b);
+      return (a + '').localeCompare(b);
+    },
+    descending: function (a, b) {
+      if (!isNaN(a) && !isNaN(b))
+        return d3.descending(+a, +b);
+      return (b + '').localeCompare(a);
     },
     isEmptyObject: jQuery.isEmptyObject,
     isArray: jQuery.isArray,
@@ -93,6 +112,42 @@ return i?u+i*(n[r]-u):u},Bo.median=function(t,e){return arguments.length>1&&(t=t
     }
     return name;
   }
+
+  var Parser = {
+    date: function (data) {
+      var date = new Date(data);
+      var year = date.getFullYear().toString();
+      var month = date.getMonth().toString();
+      return {
+        date: date,
+        year: year,
+        month: month,
+        yearmonth: year + month
+      };
+    },
+    parse: function (data) {
+      return data;
+    }
+  };
+
+  var Postprocessors = {
+    date: function (node, index, length, meta) {
+      //extend the object by parsing the date
+      var date;
+      var month = 0;
+      var day = 1;
+      if (meta.aggregate === 'year') {
+        date = new Date(node.key, month, day);
+      } else if(meta.aggregate === 'yearmonth') {
+        month = (length - 1) === index ? 11 : node.key.substring(4);
+        day = (length - 1) === index ? 31 : 1;
+        date = new Date(node.key.substring(0, 4), node.key.substring(4), day);
+      }
+      node[meta.name] = date;
+    }
+  };
+
+
   /**
    * Creates a new data model to manipulate the data
    * @param data Array Array of arrays
@@ -109,6 +164,7 @@ return i?u+i*(n[r]-u):u},Bo.median=function(t,e){return arguments.length>1&&(t=t
        by: null,
        comparator: d3.descending
      };
+     this.aggregators = {};
      this.columnOrder = [];
   };
 
@@ -125,7 +181,10 @@ return i?u+i*(n[r]-u):u},Bo.median=function(t,e){return arguments.length>1&&(t=t
       var field = column.field;
       var last;
       metaData[column.name] = column;
-      column.label = getFieldName(column.field);
+      if (typeof column.label === 'undefined')
+        column.label = getFieldName(column.field);
+
+      column.parser = (column.dataType in Parser) ? column.dataType : 'parse';
       columns.push(column.name);
       if (column.fieldType === 'measure')
         numericColumns.push(column.name);
@@ -134,6 +193,7 @@ return i?u+i*(n[r]-u):u},Bo.median=function(t,e){return arguments.length>1&&(t=t
     this.metaData = meta;
     this.indexedMetaData = metaData;
     this.columns = columns;
+    this.doAggregate = true;
     return this;
   };
 
@@ -154,10 +214,14 @@ return i?u+i*(n[r]-u):u},Bo.median=function(t,e){return arguments.length>1&&(t=t
   DataModel.prototype.indexColumns = function () {
     var indexed = [];
     var columns = this.columns;
+    var metadata = this.indexedMetaData;
     this.data.forEach(function (row) {
       var indexedRow = {};
       row.forEach(function (value, index) {
-        indexedRow[columns[index]] = value;
+        var name = columns[index];
+        var type = metadata[name].parser;
+        indexedRow[name] = value;
+        indexedRow[name + '_parsed'] = Parser[metadata[name].parser](value);
       });
       indexed.push(indexedRow);
     });
@@ -167,12 +231,18 @@ return i?u+i*(n[r]-u):u},Bo.median=function(t,e){return arguments.length>1&&(t=t
 
   /**
    * Sets the colum order to create the hierarchical object.
-   * All numeric columns will be discarded and placed at the end of the hierarchy
+   * All numeric columns will be discarded and placed at the end of the hierarchy.
+   * If second argument is specified as false the nest method will only include the fields specified on the columns parameter
+   * If second argument is missing or true, then the hierarchical data will include first the columns specified, and then the
+   * rest of te string columns.
    * @param columns Array
+   * @param nestExtras Boolean Default true, will include extra string columns in the hierarchy
    * @returns DataModel
    */
-  DataModel.prototype.setColumnOrder = function (columns) {
+  DataModel.prototype.setColumnOrder = function (columns, nestExtras) {
+    nestExtras = typeof nestExtras === 'boolean' ? nestExtras : true;
     var columnOrder = [];
+    var extraColumns = nestExtras ? this.metaData.slice() : [];
     if (!Utils.isArray(columns))
       columns = [];
 
@@ -183,7 +253,7 @@ return i?u+i*(n[r]-u):u},Bo.median=function(t,e){return arguments.length>1&&(t=t
           columnOrder.push(column);
       }, this);
       //Then add any missing string columns to the end of the array
-      this.metaData.forEach(function (column) {
+      extraColumns.forEach(function (column) {
         if (columns.indexOf(column.name) === -1 && column.fieldType !== 'measure')
           columnOrder.push(column.name);
       });
@@ -207,7 +277,7 @@ return i?u+i*(n[r]-u):u},Bo.median=function(t,e){return arguments.length>1&&(t=t
    * @returns DataModel
    */
   DataModel.prototype.asc = function () {
-    this.sort.comparator = d3.ascending;
+    this.sort.comparator = Utils.ascending;
     return this;
   };
 
@@ -216,7 +286,7 @@ return i?u+i*(n[r]-u):u},Bo.median=function(t,e){return arguments.length>1&&(t=t
    * @returns DataModel
    */
   DataModel.prototype.desc = function () {
-    this.sort.comparator = d3.descending;
+    this.sort.comparator = Utils.descending;
     return this;
   };
 
@@ -225,33 +295,41 @@ return i?u+i*(n[r]-u):u},Bo.median=function(t,e){return arguments.length>1&&(t=t
    * @return Object
    */
   DataModel.prototype.nest = function () {
+    var aggregators = this.aggregators;
+    var meta = this.indexedMetaData;
     var nest = d3.nest();
-    var numeric = {};
+    var rollups = {};
+    var columnTypes = [];
     var root = {
       key: 'root',
     };
     var nested;
 
     this.columnOrder.forEach(function (column) {
-       nest.key(function (node) {
-          return node[column];
-       });
+      var columnMeta = meta[column];
+      var aggregator = aggregators[columnMeta.dataType];
+      columnTypes.push(columnMeta);
+      nest.key(function (node) {
+        return aggregator ? aggregator(node, column) : node[column];
+      });
     });
 
-    //Create this object dinamically based on the numeric columns
-    this.numericColumns.forEach(function (column) {
-      numeric[column] = function (leaves) {
-        return d3.sum(leaves, function (node) { return node[column]; });
-      };
-    });
+    if (this.doAggregate) {
+      //Create this object dinamically based on the numeric columns
+      this.numericColumns.forEach(function (column) {
+        rollups[column] = function (leaves) {
+          return d3.sum(leaves, function (node) { return node[column]; });
+        };
+      });
 
-    nest.rollup(function (leaves) {
-      var rollup = {};
-      for (var key in numeric)
-        rollup[key] = numeric[key](leaves);
+      nest.rollup(function (leaves) {
+        var rollup = {};
+        for (var key in rollups)
+          rollup[key] = rollups[key](leaves);
 
-      return rollup;
-    });
+        return rollup;
+      });
+    }
 
     nested = nest.entries(this.indexedData);
 
@@ -259,7 +337,7 @@ return i?u+i*(n[r]-u):u},Bo.median=function(t,e){return arguments.length>1&&(t=t
     this.numericColumns.forEach(function (column) {
       accumulate(root, column);
     });
-    removeLeaf(root);
+    postProcess(root, columnTypes);
 
     if (this.sort.by)
       sort(root.values, this.sort.by, this.sort.comparator);
@@ -267,12 +345,40 @@ return i?u+i*(n[r]-u):u},Bo.median=function(t,e){return arguments.length>1&&(t=t
     return root;
   };
 
+  DataModel.prototype.aggregate = function (aggregate) {
+    if (typeof aggregate === 'undefined')
+      return this.doAggregate;
+
+    this.doAggregate = typeof aggregate === 'boolean' ? aggregate : !!aggregate;
+    return this;
+  };
+
+  DataModel.prototype.dateGroupBy = function (aggregate) {
+    var aggregators = {'year': true, 'month': true, 'yearmonth': true};
+    var key;
+    var column;
+    if (!(aggregate in aggregators))
+      aggregate = 'year';
+
+    for (key in this.indexedMetaData) {
+      column = this.indexedMetaData[key];
+      if (column.dataType === 'date')
+        column.aggregate = aggregate;
+    }
+    //create the aggregator and store it for later use
+    this.aggregators.date = function (data, column) {
+      return data[column + '_parsed'][aggregate];
+    };
+
+    return this;
+  };
+
   function sort (data, key, order) {
     if (!Utils.isArray(data))
       return false;
 
     if (typeof order !== 'function')
-      order = d3.descending;
+      order = Utils.descending;
 
     data.sort(function (nodeA, nodeB) {
       return order(nodeA[key], nodeB[key]);
@@ -294,14 +400,18 @@ return i?u+i*(n[r]-u):u},Bo.median=function(t,e){return arguments.length>1&&(t=t
         node[key] = node.values.reduce(function (prev, value) {
           return prev + accumulate(value, key);
         }, 0) :
-        node[key] = node.values[key];
+        node[key] = node.values ? node.values[key] : node[key];
     }
   }
 
-  function removeLeaf (data) {
+  function postProcess (data, columns) {
     if (data.values && Utils.isArray(data.values)) {
-      data.values.forEach(function (node) {
-         removeLeaf(node);
+      var valuesLength = data.values.length;
+      var column = columns.shift();
+      data.values.forEach(function (node, index) {
+        if (column && column.dataType in Postprocessors)
+          Postprocessors[column.dataType](node, index, valuesLength, column);
+        postProcess(node, columns);
       });
     } else if (data.values) {
       delete data.values;

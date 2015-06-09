@@ -55,10 +55,10 @@
     container.innerHTML = '';
     this.dataModel = new Utils.DataModel(data, fields);
     this.dataModel.indexColumns().setColumnOrder(['group', 'subgroup']);
-    window.dd = this.dataModel;
     var nested = this.dataModel.nest();
     var self = this;
     var colors = this.getColorScheme(props);
+    var indexedFields = this.dataModel.indexedMetaData;
     if (isNaN(parseInt(data[0][3])))
       colors = colors.slice(colors.length - 1);
 
@@ -67,7 +67,10 @@
       width: props.width,
       height: props.height,
       'background-color': props.background,
-      numericFormat: Utils.format(props.numberformat, {symbol: props.currencysymbol})
+      numericFormat: this.getFormatter(indexedFields.size, {
+        symbol: props.currencysymbol,
+        numberFormat: props.numberformat
+      })
     });
     this.visualization.render();
     this.visualization.addEventListener('filter', function (filters) {
@@ -101,6 +104,12 @@
       });
     }
     this.avoidRefresh = false;
+  },
+  getFormatter: function (field, props) {
+    if (xdo.api.format && field.dataType === 'number')
+      return xdo.api.format(field.dataType, field.formatMask);
+
+    return Utils.format(props.numberFormat, props);
   },
   constructFilters: function (data, context) {
     var group = this.dataModel.indexedMetaData.group.field;
