@@ -2,7 +2,7 @@
 var fs = require('fs');
 
 var pluginFile = 'LineChartColor.js';
-var baseURL = 'http://slc05pvj.us.oracle.com:9704/mobile/';
+var baseURL = 'http://slc05pvj.us.oracle.com:9502/mobile/';
 
 var bimad = require('orabimad-server');
 
