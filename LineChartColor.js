@@ -8,12 +8,6 @@
   properties: [
     {key: "width", label: "Width", type: "length", value: "1024px"},
     {key: "height", label: "Height", type: "length", value: "300px"},
-    {key: "numberformat", label: "Number Format", type: "lov", options: [
-      {label: 'Raw', value: 'raw'},
-      {label: 'Currency', value: 'currency'},
-      {label: 'Thousands separated', value: 'thousands'}
-    ]},
-    {key: "currencysymbol", label: "Currency Symbol", type: "string", value: ""},
     {key: "background", label: "Background Color", type: "color", value: '#fff'},
     {key: "startcolor", label: "Start Color", type: "color", value: '#ff1300'},
     {key: "middlecolor", label: "Middle Color", type: "color", value: '#ff8c00'},
@@ -67,10 +61,7 @@
       width: props.width,
       height: props.height,
       'background-color': props.background,
-      numericFormat: this.getFormatter(indexedFields.size, {
-        symbol: props.currencysymbol,
-        numberFormat: props.numberformat
-      })
+      numericFormat: this.getFormatter(indexedFields.size)
     });
     this.visualization.render();
     this.visualization.addEventListener('filter', function (filters) {
@@ -109,7 +100,7 @@
     if (xdo.api.format && field.dataType === 'number')
       return xdo.api.format(field.dataType, field.formatMask);
 
-    return Utils.format(props.numberFormat, props);
+    return Utils.format('thousands');
   },
   constructFilters: function (data, context) {
     var group = this.dataModel.indexedMetaData.group.field;
