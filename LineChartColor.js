@@ -1,9 +1,10 @@
 {
-  id: '03efcb62a28c.LineChartColorColumn',
+  id: 'com.oracle.bimad.LineChartColorColumn',
   component: {
     'name': 'Line Bar Chart with Color',
     'tooltip': 'Insert Line Bar Chart with Color',
-    'cssClass': 'line-chart-plugin'
+    'cssClass': 'line-chart-plugin',
+    'icon': 'assets://official-plugin.png'
   },
   properties: [
     {key: "width", label: "Width", type: "length", value: "1024px"},
