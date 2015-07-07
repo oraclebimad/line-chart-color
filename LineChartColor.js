@@ -69,7 +69,6 @@
       filters = self.constructFilters(filters, context);
       xdo.api.handleClickEvent(filters);
       this.updateFilterInfo(filters.filter);
-      console.log(filters);
     }).addEventListener('remove-filter', function (filters) {
       self.avoidRefresh = true;
       filters.forEach(function (filter) {
