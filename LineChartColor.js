@@ -1,8 +1,8 @@
 {
-  id: 'com.oracle.bimad.LineChartColorColumn',
+  id: 'com.oracle.bimad.LineBarChart',
   component: {
-    'name': 'Line Bar Chart with Color',
-    'tooltip': 'Insert Line Bar Chart with Color',
+    'name': 'Line Bar Chart is a variation of Bar chart, each bar is represented as a line with label and data values positioned right on top of the line. You can scroll up or down to see more data points. It supports hierarchical data filtering so that you can tap or click on each Line Bar to drill down to the next level.',
+    'tooltip': 'Insert Line Bar Chart',
     'cssClass': 'line-chart-plugin',
     'icon': 'assets://official-plugin.png'
   },
