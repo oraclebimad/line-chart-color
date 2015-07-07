@@ -4,7 +4,7 @@
     'name': 'Line Bar Chart',
     'tooltip': 'Line Bar Chart is a variation of Bar chart, each bar is represented as a line with label and data values positioned right on top of the line. You can scroll up or down to see more data points. It supports hierarchical data filtering so that you can tap or click on each Line Bar to drill down to the next level.',
     'cssClass': 'line-chart-plugin',
-    'icon': 'assets://official-plugin.png'
+    'icon': 'asset://official-plugin.png'
   },
   properties: [
     {key: "width", label: "Width", type: "length", value: "1024px"},
