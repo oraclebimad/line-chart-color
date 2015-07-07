@@ -566,7 +566,6 @@ return i?u+i*(n[r]-u):u},Bo.median=function(t,e){return arguments.length>1&&(t=t
     this.data = data;
     //order data
     sortData(data);
-    console.log(data);
     this.depth = calculateDepth(this.data.values, this.depth);
     return this;
   };
