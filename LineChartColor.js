@@ -30,7 +30,7 @@
   ],
   fields: [
     {name: "group", caption: "Drop Main Group Field Here", fieldType: "label", dataType: "string"},
-    {name: "subgroup", caption: "Drop Subgroup Field Here", fieldType: "label", dataType: "string"},
+    {name: "subgroup", caption: "Drop Subgroup Field Here", fieldType: "label", dataType: "string", optional: true},
     {name: "size", caption: "Drop Size Field Here", fieldType: "measure", dataType: "number", formula: "summation"},
     {name: "color", caption: "Drop Color Field Here", fieldType: "measure", dataType: "number", formula: "summation", optional: true}
   ],
@@ -47,15 +47,21 @@
     return colors;
   },
   render: function (context, container, data, fields, props) {
+    var columnOrder = ['group'];
+
+    if (typeof data[0][1] === 'string' && data[0][1].length)
+      columnOrder.push('subgroup');
+
     container.innerHTML = '';
     this.dataModel = new Utils.DataModel(data, fields);
-    this.dataModel.indexColumns().setColumnOrder(['group', 'subgroup']);
+    this.dataModel.indexColumns().setColumnOrder(columnOrder, false);
     var nested = this.dataModel.nest();
     var self = this;
     var colors = this.getColorScheme(props);
     var indexedFields = this.dataModel.indexedMetaData;
     if (isNaN(parseInt(data[0][3])))
       colors = colors.slice(colors.length - 1);
+
 
     this.visualization = new Visualizations.LineChart(container, nested, {
       colors: colors,
