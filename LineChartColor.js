@@ -9,11 +9,10 @@
   properties: [
     {key: "width", label: "Width", type: "length", value: "1024px"},
     {key: "height", label: "Height", type: "length", value: "300px"},
-    {key: "background", label: "Background Color", type: "color", value: '#fff'},
-    {key: "startcolor", label: "Start Color", type: "color", value: '#ff1300'},
-    {key: "middlecolor", label: "Middle Color", type: "color", value: '#ff8c00'},
-    {key: "endcolor", label: "End Color", type: "color", value: '#46b319'},
-    {key: "invert", label: "Invert Colors", type: "bool", value: false}
+    {key: "threshold", label: "Threshold", type: "number", value: "0"},
+    {key: "startcolor", label: "Lower Color", type: "color", value: '#ff1300'},
+    {key: "endcolor", label: "Upper Color", type: "color", value: '#46b319'},
+    {key: "background", label: "Background Color", type: "color", value: '#fff'}
   ],
   remoteFiles: [
     {
@@ -37,14 +36,7 @@
   dataType: 'arrayOfArrays',
   avoidRefresh: false,
   getColorScheme: function (props) {
-    var colors = [props.startcolor, props.middlecolor, props.endcolor];
-    var invert = props.invert;
-    if (typeof invert !== 'boolean') {
-      invert = invert === 'false' ? false : true;
-    }
-    if (invert)
-      colors.reverse();
-    return colors;
+    return [props.startcolor, props.endcolor];
   },
   render: function (context, container, data, fields, props) {
     var columnOrder = ['group'];
@@ -59,8 +51,11 @@
     var self = this;
     var colors = this.getColorScheme(props);
     var indexedFields = this.dataModel.indexedMetaData;
-    if (isNaN(parseInt(data[0][3])))
+    var colorLegend = this.dataModel.indexedMetaData.color.label;
+    if (isNaN(parseInt(data[0][3]))) {
       colors = colors.slice(colors.length - 1);
+      colorLegend = null;
+    }
 
 
     this.visualization = new Visualizations.LineChart(container, nested, {
@@ -68,9 +63,11 @@
       width: props.width,
       height: props.height,
       'background-color': props.background,
-      numericFormat: this.getFormatter(indexedFields.size)
+      numericFormat: this.getFormatter(indexedFields.size),
+      threshold: +props.threshold,
+      colorLegend: colorLegend
     });
-    this.visualization.render();
+    this.visualization.renderLegends().render();
     this.visualization.addEventListener('filter', function (filters) {
       filters = self.constructFilters(filters, context);
       xdo.api.handleClickEvent(filters);
@@ -79,7 +76,7 @@
       self.avoidRefresh = true;
       filters.forEach(function (filter) {
         try{
-             xdo.app.viewer.GlobalFilter.removeFilter(context.id, filter.id);
+             xdo.app.viewer.GlobalFilter.removeFilter(context.id, filter.id, false);
         } catch (e) {}
       });
     });
