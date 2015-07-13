@@ -94,7 +94,6 @@ module.exports = function (grunt) {
       },
       dist: {
         src: [
-          'assets/js/externals/d3/d3.min.js',
           'assets/js/Utils/Utils.js',
           'assets/js/Utils/Utils.DataModel.js',
           'assets/core/js/Visualizations.LineChart.js',

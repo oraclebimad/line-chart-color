@@ -9,12 +9,19 @@
   properties: [
     {key: "width", label: "Width", type: "length", value: "1024px"},
     {key: "height", label: "Height", type: "length", value: "300px"},
+    {key: "defaultcolor", label: "Default Color", type: "color", value: '#46b319'},
     {key: "threshold", label: "Threshold", type: "number", value: "0"},
     {key: "startcolor", label: "Lower Color", type: "color", value: '#ff1300'},
-    {key: "endcolor", label: "Upper Color", type: "color", value: '#46b319'},
-    {key: "background", label: "Background Color", type: "color", value: '#fff'}
+    {key: "endcolor", label: "Upper Color", type: "color", value: '#46b319'}
   ],
   remoteFiles: [
+    {
+      type:'js',
+      location: '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js',
+      isLoaded: function() {
+        return ('d3' in window);
+      }
+    },
     {
       type:'js',
       location: 'asset://js/LineChart.concat.js',
@@ -51,7 +58,7 @@
     var self = this;
     var colors = this.getColorScheme(props);
     var indexedFields = this.dataModel.indexedMetaData;
-    var colorLegend = this.dataModel.indexedMetaData.color.label;
+    var colorLegend = indexedFields.color.label;
     if (isNaN(parseInt(data[0][3]))) {
       colors = colors.slice(colors.length - 1);
       colorLegend = null;
@@ -62,10 +69,11 @@
       colors: colors,
       width: props.width,
       height: props.height,
-      'background-color': props.background,
+      'background-color': '#fff',
       numericFormat: this.getFormatter(indexedFields.size),
       threshold: +props.threshold,
-      colorLegend: colorLegend
+      colorLegend: colorLegend,
+      sizeLegend: indexedFields.size.label
     });
     this.visualization.renderLegends().render();
     this.visualization.addEventListener('filter', function (filters) {
@@ -85,7 +93,7 @@
   refresh: function (context, container, data, fields, props) {
     var colors = this.getColorScheme(props)
     if (isNaN(parseInt(data[0][3])))
-      colors = colors.slice(colors.length - 1);
+      colors = [props.defaultcolor];
     //hack to avoid refresh when removing filters from this plugin
     if (!this.avoidRefresh) {
       var self = this;
