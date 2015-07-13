@@ -571,12 +571,32 @@
   };
 
   LineChart.prototype.setColors = function (colors) {
+    var self = this;
+    var getColor;
     this.colorScale = d3.scale.threshold();
     this.colorScale.range(colors);
+
     if (isNaN(this.options.threshold))
       this.setColorDomain();
     else
       this.colorScale.domain([this.options.threshold]);
+
+    if (colors.length > 1) {
+      getColor = function (scale, color) {
+        var fraction = color;
+        var max;
+        if (isNaN(self.options.threshold)) {
+          max = self[scale].max;
+          fraction = color > 0 ? color / max : 0;
+        }
+        return this[scale](fraction);
+      };
+    } else {
+      getColor = function () {
+        return colors[0];
+      };
+    }
+    this.getColor = getColor;
     return this;
   };
 
@@ -595,16 +615,6 @@
     if (isNaN(this.options.threshold))
       this.colorScale.max = d3.max(Utils.pluck(data, this.options.colorProperty));
     return this;
-  };
-
-  LineChart.prototype.getColor = function (scale, color) {
-    var max;
-    var fraction = color;
-    if (isNaN(this.options.threshold)) {
-      max = this[scale].max;
-      fraction = color > 0 ? color / max : 0;
-    }
-    return this[scale](fraction);
   };
 
   LineChart.prototype.animate = function (animate) {

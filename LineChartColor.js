@@ -60,7 +60,7 @@
     var indexedFields = this.dataModel.indexedMetaData;
     var colorLegend = indexedFields.color.label;
     if (isNaN(parseInt(data[0][3]))) {
-      colors = colors.slice(colors.length - 1);
+      colors = [props.defaultcolor];
       colorLegend = null;
     }
 
