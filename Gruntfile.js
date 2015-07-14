@@ -94,8 +94,8 @@ module.exports = function (grunt) {
       },
       dist: {
         src: [
-          'assets/js/Utils/Utils.js',
-          'assets/js/Utils/Utils.DataModel.js',
+          'assets/js/Utils/bimad.utils.js',
+          'assets/js/Utils/bimad.utils.DataModel.js',
           'assets/core/js/Visualizations.LineChart.js',
         ],
         dest: 'assets/js/LineChart.concat.js'

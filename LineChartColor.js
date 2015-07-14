@@ -52,7 +52,7 @@
       columnOrder.push('subgroup');
 
     container.innerHTML = '';
-    this.dataModel = new Utils.DataModel(data, fields);
+    this.dataModel = new bimad.utils.DataModel(data, fields);
     this.dataModel.indexColumns().setColumnOrder(columnOrder, false);
     var nested = this.dataModel.nest();
     var self = this;
@@ -111,7 +111,7 @@
     if (xdo.api.format && field.dataType === 'number')
       return xdo.api.format(field.dataType, field.formatMask);
 
-    return Utils.format('thousands');
+    return bimad.utils.format('thousands');
   },
   constructFilters: function (data, context) {
     var group = this.dataModel.indexedMetaData.group.field;
