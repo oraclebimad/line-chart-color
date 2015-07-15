@@ -554,14 +554,16 @@
     this.scale = d3.scale.linear();
     this.scale.clamp(true).range([1, 100]);
 
-    this.barContainer.node().addEventListener('click', function (event) {
-      var target = $(event.target || event.srcElement);
-      var selector = 'div.line-container';
-      var line = target.is(selector) ? target : target.parents(selector);
+    if (!bimad.utils.isDesigner()) {
+      this.barContainer.node().addEventListener('click', function (event) {
+        var target = $(event.target || event.srcElement);
+        var selector = 'div.line-container';
+        var line = target.is(selector) ? target : target.parents(selector);
 
-      if (line.length)
-        self.toggleSelect(line[0]);
-    });
+        if (line.length)
+          self.toggleSelect(line[0]);
+      });
+    }
   };
 
   LineChart.prototype.setData = function (data) {
