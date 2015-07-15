@@ -10,7 +10,7 @@
   properties: [
     {key: "width", label: "Width", type: "length", value: "1024px"},
     {key: "height", label: "Height", type: "length", value: "300px"},
-    {key: "defaultcolor", label: "Default Color", type: "color", value: '#46b319'},
+    {key: "defaultcolor", label: "Default Color", type: "color", value: '#00bfff'},
     {key: "threshold", label: "Threshold", type: "number", value: "0"},
     {key: "startcolor", label: "Lower Color", type: "color", value: '#ff1300'},
     {key: "endcolor", label: "Upper Color", type: "color", value: '#46b319'}
