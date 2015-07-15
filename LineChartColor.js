@@ -38,7 +38,7 @@
   fields: [
     {name: "group", caption: "Drop Main Group Field Here", fieldType: "label", dataType: "string"},
     {name: "subgroup", caption: "Drop Subgroup Field Here", fieldType: "label", dataType: "string", optional: true},
-    {name: "size", caption: "Drop Size Field Here", fieldType: "measure", dataType: "number", formula: "summation"},
+    {name: "size", caption: "Drop Size Field Here", fieldType: "measure", dataType: "number", formula: "summation", formatMask: '#,###'},
     {name: "color", caption: "Drop Color Field Here", fieldType: "measure", dataType: "number", formula: "summation", optional: true}
   ],
   dataType: 'arrayOfArrays',
