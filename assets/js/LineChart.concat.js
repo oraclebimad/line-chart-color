@@ -518,7 +518,8 @@
     },
     colorProperty: 'color',
     sizeFormat: 'currency',
-    'background-color': '#F1F5F8'
+    renderLegends: true,
+    'background-color': '#fff'
 
   };
 
@@ -768,22 +769,24 @@
   };
 
   LineChart.prototype.renderLegends = function () {
-    if (this.legends.select('div.text-wrapper').size())
+    if (!this.options.renderLegends || this.legends.select('div.text-wrapper').size())
       return this;
     var legends = [];
     var upper;
     var lower;
+
+    legends.push('<span class="legend-text">' + bimad.utils.capitalize(this.options.sizeLegend) + ': </span>');
+    legends.push('<span class="legend size legend-spacer"></span>');
+
     if (this.options.colorLegend) {
       lower = this.colorScale(this.options.threshold - 1);
       upper = this.colorScale(this.options.threshold + 1);
       legends.push('<span class="legend-text">' + bimad.utils.capitalize(this.options.colorLegend) + ': </span>');
       legends.push('<span class="legend color" style="background-color:' + lower + '"></span>');
       legends.push('&lt; ' + this.options.threshold + ' &lt;');
-      legends.push('<span class="legend color legend-spacer" style="background-color:' + upper + '"></span>');
+      legends.push('<span class="legend color" style="background-color:' + upper + '"></span>');
     }
 
-    legends.push('<span class="legend-text">' + bimad.utils.capitalize(this.options.sizeLegend) + ': </span>');
-    legends.push('<span class="legend size"></span>');
 
     this.legends.append('div').attr({
       'class': 'text-wrapper'
