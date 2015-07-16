@@ -13,7 +13,8 @@
     {key: "defaultcolor", label: "Default Color", type: "color", value: '#00bfff'},
     {key: "threshold", label: "Threshold", type: "number", value: "0"},
     {key: "startcolor", label: "Lower Color", type: "color", value: '#ff1300'},
-    {key: "endcolor", label: "Upper Color", type: "color", value: '#46b319'}
+    {key: "endcolor", label: "Upper Color", type: "color", value: '#46b319'},
+    {key: "renderLegends", label: "Show Legends", type: "bool", value: true}
   ],
   remoteFiles: [
     {
@@ -74,7 +75,8 @@
       numericFormat: this.getFormatter(indexedFields.size),
       threshold: +props.threshold,
       colorLegend: colorLegend,
-      sizeLegend: indexedFields.size.label
+      sizeLegend: indexedFields.size.label,
+      renderLegends: bimad.utils.stringToBoolean(props.renderLegends)
     });
     this.visualization.renderLegends().render();
     this.visualization.addEventListener('filter', function (filters) {
